@@ -80,12 +80,12 @@ class Router
      *
      * @return void
      */
-    public function dispatch(string $url): void
+    public function dispatch(string $uri): void
     {
 
-        $url = $this->removeQueryStringVariables($url);
+        $uri = $this->removeQueryStringVariables($uri);
 
-        if ($this->match($url)) {
+        if ($this->match($uri)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             //$controller = "App\Controllers\\$controller";
