@@ -3,6 +3,8 @@
 namespace Core;
 
 
+use Exception;
+
 class Router
 {
 
@@ -76,9 +78,9 @@ class Router
      * Dispatch the route, creating the controller object and running the
      * action method
      *
-     * @param string $url
-     *
+     * @param string $uri
      * @return void
+     * @throws Exception
      */
     public function dispatch(string $uri): void
     {
@@ -88,7 +90,6 @@ class Router
         if ($this->match($uri)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
-            //$controller = "App\Controllers\\$controller";
             $controller = $this->getNamespace() . $controller;
 
             if (class_exists($controller)) {
@@ -101,13 +102,13 @@ class Router
                     $controller_object->$action();
 
                 } else {
-                    echo "Method $action (in controller $controller) not found";
+                    throw new Exception("Method $action (in controller $controller) not found");
                 }
             } else {
-                echo "Controller class $controller not found";
+                throw new Exception("Controller class $controller not found");
             }
         } else {
-            echo 'No route matched.';
+            throw new Exception('No route matched.', 404);
         }
     }
 
