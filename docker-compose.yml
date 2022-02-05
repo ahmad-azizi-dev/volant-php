@@ -12,7 +12,7 @@ services:
     working_dir: /var/www/html/
     command: bash -c "php -S php:80 -t public"
     depends_on:
-      - mysql
+      - mysql8
 
   mysql8:
     image: mysql:8.0
